@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Accessible Study Companion</title>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Accessible Study Companion</h1>
+    </header>
+
+    <main class="workspace">
+
+        <section class="video-section">
+            <h2>Video Player</h2>
+
+            <video id="videoPlayer" controls>
+                Your browser does not support video playback.
+            </video>
+
+            <button id="extractButton">
+                Extract Code
+            </button>
+        </section>
+
+        <section class="code-section">
+            <h2>Recognised Code</h2>
+
+            <pre id="ocrOutput">
+                Extracted code will appear here.
+            </pre>
+
+            <button id="copyButton">
+                Copy Code
+            </button>
+        </section>
+
+    </main>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
