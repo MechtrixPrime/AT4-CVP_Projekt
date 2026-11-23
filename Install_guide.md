@@ -38,8 +38,8 @@ curl.exe -L "https://github.com/tesseract-ocr/tessdata_best/raw/main/eng.trained
 ````
 
 Step 6:
-
-Installing Python packages
+Start the python venv then
+Install Python packages
 Run the command:
 ````
 python -m pip install -r requirements.txt
@@ -48,5 +48,5 @@ python -m pip install -r requirements.txt
 Step 7:
 Start the server:
 ````
-uvicorn app.main:app --reload
+python -m uvicorn app.main:app --reload
 ````
