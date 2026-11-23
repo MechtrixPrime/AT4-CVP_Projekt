@@ -3,6 +3,21 @@ import cv2
 import numpy as np
 from PIL import Image
 import pytesseract
+import os
+
+TESSERACT_DIR = r"C:\ProgramData\Laragon\www\Sources\Repos\Tesseract-OCR"
+
+pytesseract.pytesseract.tesseract_cmd = os.path.join(
+    TESSERACT_DIR,
+    "tesseract.exe"
+)
+
+# Tesseract language data directory
+os.environ["TESSDATA_PREFIX"] = os.path.join(
+    TESSERACT_DIR,
+    "tessdata"
+)
+
 
 # Temp path
 VID_PATH = Path("../../resources/videos/oop.mp4")
@@ -105,9 +120,10 @@ class CodingVideo:
         return pytesseract.image_to_string(frame)
 
 def test():
+    pass
     oop = CodingVideo(VID_PATH)
     print(oop)
-    # oop.save_as_image(132)
+    oop.save_as_image(132)
 
     print(oop.get_text_at_time(132))
 
