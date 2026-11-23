@@ -44,3 +44,9 @@ Run the command:
 ````
 python -m pip install -r requirements.txt
 ````
+
+Step 7:
+Start the server:
+````
+uvicorn app.main:app --reload
+````
