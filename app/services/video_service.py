@@ -7,20 +7,12 @@ import os
 
 TESSERACT_DIR = r"C:\ProgramData\Laragon\www\Sources\Repos\Tesseract-OCR"
 
-pytesseract.pytesseract.tesseract_cmd = os.path.join(
-    TESSERACT_DIR,
-    "tesseract.exe"
-)
 
-# Tesseract language data directory
-os.environ["TESSDATA_PREFIX"] = os.path.join(
-    TESSERACT_DIR,
-    "tessdata"
-)
+BASE_DIR = Path(__file__).resolve().parents[2]
 
-
-# Temp path
-VID_PATH = Path("../../resources/videos/oop.mp4")
+VIDEOS = {
+    "demo": BASE_DIR / "resources" / "videos" / "oop.mp4"
+}
 
 class CodingVideo:
     capture: cv2.VideoCapture
@@ -34,6 +26,10 @@ class CodingVideo:
 
         self.fps = self.capture.get(cv2.CAP_PROP_FPS)
         self.frame_count = int(self.capture.get(cv2.CAP_PROP_FRAME_COUNT))
+        if self.fps <= 0:
+            self.capture.release()
+            raise ValueError("Invalid video frame rate")
+
         self.duration = self.frame_count / self.fps
 
 
@@ -56,7 +52,7 @@ class CodingVideo:
         )
 
 
-    def get_frame_number_at_time(self, seconds: int) -> int:
+    def get_frame_number_at_time(self, seconds: float) -> int:
         """Given a time in seconds, returns the value of the nearest frame"""
         if seconds < 0:
             raise ValueError("Seconds cannot be negative")
@@ -69,7 +65,7 @@ class CodingVideo:
         return frame_number
 
 
-    def get_frame_rgb_array(self, frame_number: int) -> np.ndarray:
+    def get_frame_rgb_array(self, frame_number: float) -> np.ndarray:
         """Returns a numpy N-dimensional array (ndarray)
 
         The array represents the RGB values of each pixel in a given frame
@@ -89,7 +85,7 @@ class CodingVideo:
 
         return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    def get_image_as_bytes(self, seconds: int) -> bytes:
+    def get_image_as_bytes(self, seconds: float) -> bytes:
         self.capture.set(cv2.CAP_PROP_POS_FRAMES, self.get_frame_number_at_time(seconds))
         ok, frame = self.capture.read()
         if not ok or frame is None:
@@ -100,7 +96,7 @@ class CodingVideo:
         return buf.tobytes()
 
 
-    def save_as_image(self, seconds: int, output_path: Path | str = 'output.png') -> None:
+    def save_as_image(self, seconds: float, output_path: Path | str = 'output.png') -> None:
       """Saves the given frame as a png image
 
       https://pillow.readthedocs.io/en/stable/reference/Image.html
@@ -112,7 +108,7 @@ class CodingVideo:
       image.save(output_path)
 
 
-    def get_text_at_time(self, seconds: int) -> str:
+    def get_text_at_time(self, seconds: float) -> str:
         """Extracts the text from a video frame at the given timestamp."""
         frame_number = self.get_frame_number_at_time(seconds)
         frame = self.get_frame_rgb_array(frame_number)
@@ -121,11 +117,10 @@ class CodingVideo:
 
 def test():
     pass
-    oop = CodingVideo(VID_PATH)
+    oop = CodingVideo(VIDEOS['demo'])
     print(oop)
-    oop.save_as_image(132)
+    # oop.save_as_image(132)
 
-    print(oop.get_text_at_time(132))
 
 
 if __name__ == '__main__':
