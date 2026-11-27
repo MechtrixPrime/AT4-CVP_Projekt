@@ -1,27 +1,67 @@
-# Overview
+# Accessible Study Companion
 
-Include a brief overview of the project, include:
+## Overview
 
-- How do you deploy and run the project?
-- What are its core dependencies?
-- Who is it for and why?
+Accessible Study Companion is a browser-based application designed to help students access programming tutorial videos and extract programming code from video frames using Optical Character Recognition (OCR).
 
+The application focuses on accessibility and usability, providing features such as keyboard navigation, screen-reader support, adjustable text sizes and high-contrast mode.
 
-### Tesseract OCR installation
+### Core Technologies and Dependencies
 
-This project uses `pytesseract` as a Python wrapper for the Tesseract OCR engine.
+The project uses the following technologies:
 
-The Tesseract OCR executable must be installed separately.
+- **Python** – Backend programming language.
+- **FastAPI** – Provides the backend API and server.
+- **HTML** – Structures the frontend interface.
+- **CSS** – Controls the application's appearance and accessibility styling.
+- **JavaScript** – Handles frontend interactions, validation and communication with the backend.
+- **OpenCV** – Processes video files and extracts individual frames.
+- **Pillow** – Handles image processing.
+- **pytesseract** – Python wrapper used to communicate with the Tesseract OCR engine.
+- **Tesseract OCR** – Performs optical character recognition to extract text from video frames.
 
-For Windows:
-1. Download and install Tesseract from the [UB Mannheim Windows installer page](https://github.com/UB-Mannheim/tesseract/wiki).
-2. Ensure the Tesseract installation directory is added to your system PATH.
-3. Open a terminal and run `tesseract --version` to verify the installation.
+### Installation and Setup
 
-The Python wrapper is installed through the project's dependencies using:
+#### 1. Install Tesseract OCR
+
+Tesseract OCR must be installed separately because `pytesseract` is only a Python wrapper for the OCR engine.
+
+For detailed Windows installation instructions, including downloading Tesseract, configuring its installation directory and installing the English language data, refer to:
+
+[**Tesseract OCR Installation Guide**](Install_guide.md)
+
+#### 2. Set Up the Python Environment
+
+Create and activate a Python virtual environment for the project.
+
+Install the required Python packages using:
 
 ```bash
-uv sync
+python -m pip install -r requirements.txt
 ```
 
-If Tesseract is not available through PATH, its executable location must be configured in the Python application.
+#### 3. Start the Application
+
+Once the dependencies are installed, start the FastAPI server using:
+
+```bash
+python -m uvicorn app.main:app --reload
+```
+
+The application should then be accessible at:
+
+```text
+http://127.0.0.1:8000/
+```
+
+The interactive FastAPI API documentation is available at:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+### Additional Information
+
+- The application requires Tesseract OCR to be installed and accessible to the Python application.
+- The included `install_guide.md` provides Windows-specific installation instructions using the configured Laragon directory.
+- The `requirements.txt` file contains the Python dependencies required to run the application.
