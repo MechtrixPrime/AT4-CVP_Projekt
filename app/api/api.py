@@ -2,15 +2,10 @@ from pathlib import Path
 
 from fastapi import HTTPException, APIRouter
 from fastapi import Response
-from app.services.video_service import CodingVideo
+from app.services.video_service import CodingVideo, VIDEOS
 from app.models.video import VideoMetaData
 from fastapi.responses import FileResponse
 router = APIRouter()
-
-# Temp Path
-VIDEOS = {
-    "demo":  Path("./resources/videos/oop.mp4")
-}
 
 @router.get("/video")
 def list_videos():
@@ -65,11 +60,21 @@ def video(vid: str):
 
 @router.get("/video/{vid}/frame/{t}", response_class=Response)
 def video_frame(vid: str, t: float):
+    video = _open_vid_or_404(vid)
+
     try:
-        video = _open_vid_or_404(vid)
-        return Response(content=video.get_image_as_bytes(t), media_type="image/png")
+        image = video.get_image_as_bytes(t)
+
+        return Response(
+            content=image,
+            media_type="image/png"
+        )
+
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
     finally:
-      video.capture.release()
+        video.capture.release()
 
 
 @router.get("/video/{vid}/frame/{t}/ocr")
