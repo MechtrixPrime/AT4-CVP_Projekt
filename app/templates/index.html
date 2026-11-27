@@ -60,6 +60,36 @@
             role="alert"
             aria-atomic="true"
         ></div>
+        <section class="settings-section" aria-labelledby="settings-heading">
+
+            <h2 id="settings-heading">Personalisation Settings</h2>
+
+            <div class="setting">
+                <label for="textSize">Recognised Code Text Size</label>
+
+                <select id="textSize">
+                    <option value="14">Small</option>
+                    <option value="16" selected>Medium</option>
+                    <option value="20">Large</option>
+                    <option value="24">Extra Large</option>
+                </select>
+            </div>
+
+            <div class="setting">
+                <input type="checkbox" id="highContrast">
+
+                <label for="highContrast">
+                    Enable High-Contrast Mode
+                </label>
+            </div>
+
+            <button type="button" id="resetSettings">
+                Reset Personalisation Settings
+            </button>
+
+            <p id="settingsStatus" role="status" aria-live="polite"></p>
+
+        </section>
 
     </main>
 
