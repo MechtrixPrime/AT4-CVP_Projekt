@@ -26,6 +26,6 @@ app.include_router(router)
 @app.get("/")
 def home(request: Request):
     return templates.TemplateResponse(
-        {"request": request},
-        "index.html"
+        request=request,
+        name="index.html"
     )
