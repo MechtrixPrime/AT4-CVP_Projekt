@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,29 +16,50 @@
 
     <main class="workspace">
 
-        <section class="video-section">
-            <h2>Video Player</h2>
+        <section class="video-section" aria-labelledby="video-heading">
+            <h2 id="video-heading">Video Player</h2>
 
-            <video id="videoPlayer" controls>
+            <video
+                id="videoPlayer"
+                controls
+                aria-label="Programming tutorial video"
+            >
                 Your browser does not support video playback.
             </video>
 
-            <button id="extractButton">
-                Extract Code
+            <button id="extractButton" type="button">
+                Extract Code from Current Video Position
             </button>
         </section>
 
-        <section class="code-section">
-            <h2>Recognised Code</h2>
+        <section class="code-section" aria-labelledby="code-heading">
+            <h2 id="code-heading">Recognised Code</h2>
 
-            <pre id="ocrOutput">
-                Extracted code will appear here.
-            </pre>
+            <pre
+                id="ocrOutput"
+                tabindex="0"
+                aria-label="Extracted programming code"
+            >Extracted code will appear here.</pre>
 
-            <button id="copyButton">
+            <button id="copyButton" type="button">
                 Copy Code
             </button>
         </section>
+
+        <!-- Screen readers are informed when an operation finishes -->
+        <div
+            id="statusMessage"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+        ></div>
+
+        <!-- Errors are announced with higher priority -->
+        <div
+            id="errorMessage"
+            role="alert"
+            aria-atomic="true"
+        ></div>
 
     </main>
 
